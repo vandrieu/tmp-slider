@@ -1,5 +1,23 @@
 import { max, min } from "date-fns"
-import { CountItem, RawItem } from "./Range"
+
+export type RawItem = {
+    start: Date;
+    end: Date;
+  };
+  
+  export type CountItem = {
+    start: Date;
+    end: Date;
+    count: number;
+  };
+  
+  export type DrawItem = {
+    xFrom: number; // in percentage (ex: 50 for 50%)
+    xTo: number; // in percentage (ex: 50 for 50%)
+    yFrom: number; // in percentage (ex: 50 for 50%)
+    yTo: number; // in percentage (ex: 50 for 50%)
+    countItem: CountItem;
+  };
 
 // Convert x and y from percentage [0;100] to pixels:
 export function percentToPixels( value: number, parentSize: number): number {

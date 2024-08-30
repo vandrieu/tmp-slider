@@ -10,8 +10,8 @@ export default function Slider({
 }: {
   valueMin: Date;
   valueMax: Date;
-  onDrag: (sliderId: number, value: Date) => void;
-  sliderId: number;
+  onDrag: (sliderId: 0 | 1, value: Date) => void;
+  sliderId: 0 | 1;
   value: Date;
 }) {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -66,9 +66,7 @@ export default function Slider({
     };
   }, []);
 
-  const sliderBorderWidth = 0;
-  const sliderHandle = 16;
-  const handleTranslate = (sliderHandle - sliderBorderWidth) / 2;
+  const sliderHandleWidth = 11;
 
   const valuePercent = valueToPercent(value, valueMin, valueMax);
 
@@ -76,25 +74,41 @@ export default function Slider({
     <>
       <div
         ref={sliderRef}
-        className="bg-slate-400 absolute"
+        className=" absolute cursor-pointer"
         style={{
-          width: sliderBorderWidth,
-          height: "100%",
           top: 0,
+          width: sliderHandleWidth,
+          height: "100%",
           left: `${valuePercent}%`,
           transform: "translate(-50%, 0)",
         }}
+        onDragStart={(e) => e.preventDefault()}
       >
-        <div
-          className="bg-slate-400 absolute cursor-pointer"
+        <svg
+          width={sliderHandleWidth}
+          height="18"
+          viewBox="0 0 11 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
           style={{
-            width: sliderHandle,
-            height: "20%",
             top: "50%",
-            left: 0,
-            transform: `translate(-${handleTranslate}px, -50%)`,
+            left: "50%",
+            transform: "translate(-50%,-50%)",
           }}
-        ></div>
+          className="absolute"
+        >
+          <rect
+            x="0.5"
+            y="0.5"
+            width="10"
+            height="17"
+            rx="1.5"
+            fill="#0E1330"
+            stroke="white"
+          />
+          <line x1="4.5" y1="4" x2="4.5" y2="14" stroke="white" />
+          <line x1="6.5" y1="4" x2="6.5" y2="14" stroke="white" />
+        </svg>
       </div>
     </>
   );
